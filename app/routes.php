@@ -11,7 +11,15 @@
 |
 */
 
-Route::get('/', function()
-{
-	return View::make('hello');
+Route::get('/', function() {
+	return View::make('master');
+});
+
+Route::group(array('prefix' => 'api/v1'), function() {
+    Route::post('authenticate', 'AuthenticateController@authenticate');
+    Route::resource('users', 'UsersController');
+
+    Route::group(array('before' => 'auth.rest'), function() {
+        Route::resource('times', 'TimesController');
+    });
 });

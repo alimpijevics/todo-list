@@ -54,6 +54,18 @@ Route::filter('auth.basic', function()
 	return Auth::basic();
 });
 
+Route::filter('auth.rest', function()
+{
+	$user = User::where('api_key', Request::header('X-ApiKey'))->first();
+
+	if ($user) {
+		Auth::onceUsingId($user->id);
+		return;
+	}
+
+	return Response::make('Unauthorized', 401);
+});
+
 /*
 |--------------------------------------------------------------------------
 | Guest Filter
