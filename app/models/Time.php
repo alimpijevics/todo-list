@@ -7,7 +7,7 @@ class Time extends Eloquent {
     protected $fillable = array('user_id', 'worked_hours', 'date', 'notes');
 
     public static $storeRules = array(
-        'worked_hours' => 'required',
+        'worked_hours' => 'numeric|required',
         'date' => 'date|required'
     );
 
@@ -15,10 +15,4 @@ class Time extends Eloquent {
     {
         return $this->belongsTo('User');
     }
-
-    public function getDates()
-    {
-        return array('date', 'created_at', 'updated_at');
-    }
-
 }

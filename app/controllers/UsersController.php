@@ -27,7 +27,7 @@ class UsersController extends \BaseController {
 	 */
 	public function store()
 	{
-		$userData = Input::only('full_name', 'email', 'password', 'confirm_password');
+		$userData = Input::only('full_name', 'email', 'password', 'confirm_password', 'preferred_working_hours');
 		$result = $this->usersRepository->create($userData);
 
 		if ($result instanceof Illuminate\Validation\Validator) {
@@ -66,11 +66,11 @@ class UsersController extends \BaseController {
 	{
 		$user = $this->usersRepository->find($id);
 
-		if (!$user) {
+                if (!$user) {
 			return $this->notValidResponse('User with provided ID does not exist', 404);
 		}
 
-		$userData = Input::only('full_name', 'email');
+		$userData = Input::only('preferred_working_hours');
 
 		$result = $this->usersRepository->update($user, $userData);
 

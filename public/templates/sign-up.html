@@ -1,0 +1,20 @@
+<form ng-submit="register()" class="form-signup" role="form">
+  <h2 class="form-signup-heading">Sign up</h2>
+
+  <input ng-class="{ error: registerErrors.full_name }" ng-model="newUser.full_name" type="text" class="form-control" placeholder="Full Name"  autofocus>
+  <small ng-show="registerErrors.full_name" class="error">{{ registerErrors.full_name[0] }}</small>
+
+  <input ng-class="{ error: registerErrors.email }" ng-model="newUser.email" type="email" class="form-control" placeholder="Email address" >
+  <small ng-show="registerErrors.email" class="error">{{ registerErrors.email[0] }}</small>
+
+  <input ng-class="{ error: registerErrors.password }" ng-model="newUser.password" type="password" class="form-control" placeholder="Password" >
+  <small ng-show="registerErrors.password" class="error">{{ registerErrors.password[0] }}</small>
+
+  <input ng-model="newUser.confirm_password" type="password" class="form-control" placeholder="Confirm Password" >
+
+  <div class="checkbox">
+    <a href="#/login" class="pull-right">Go back to login</a>
+  </div>
+
+  <button class="btn btn-lg btn-primary btn-block" type="submit">Sign Up</button>
+</form>

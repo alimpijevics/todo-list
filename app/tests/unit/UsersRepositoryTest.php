@@ -48,21 +48,14 @@ class UsersRepositoryTest extends DbTestCase {
 			'full_name' => 'John Doe',
 			'email' => 'John@Doe.com',
 			'password' => 'asdf',
-			'confirm_password' => 'asdf'
+			'confirm_password' => 'asdf',
 		]);
-
-		$res = $this->repo->update($newUser, []);
-		$this->assertTrue($res instanceof Illuminate\Validation\Validator);
-
-		$res = $this->repo->update($newUser, ['full_name' => 'asd']);
-		$this->assertTrue($res instanceof Illuminate\Validation\Validator);
 
 		$res = $this->repo->update($newUser, [
-			'full_name' => 'John Doe',
-			'email' => 'test@test.com',
+			'preferred_working_hours' => '8'
 		]);
 		$this->assertFalse($res instanceof Illuminate\Validation\Validator);
-		$this->assertEquals('test@test.com', $newUser->email);
+		$this->assertEquals(8, $newUser->preferred_working_hours);
 	}
 
 

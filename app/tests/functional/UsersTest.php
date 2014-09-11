@@ -106,15 +106,13 @@ class UsersTest extends DbTestCase
         $user = $this->createTestUser();
 
         $userData = [
-            'full_name' => 'test',
-            'email' => 'test@test.com',
+            'preferred_working_hours' => '10'
         ];
 
         $response = $this->call('PUT', '/api/v1/users/' . $user->id, $userData);
         $this->assertResponseOk();
         $responseUser = json_decode($response->getContent(), true);
-        $this->assertEquals($userData['full_name'], $responseUser['full_name']);
-        $this->assertEquals($userData['email'], $responseUser['email']);
+        $this->assertEquals($userData['preferred_working_hours'], $responseUser['preferred_working_hours']);
     }
 
     /**
@@ -125,14 +123,13 @@ class UsersTest extends DbTestCase
         $user = $this->createTestUser();
 
         $userData = [
-            'full_name' => 'test',
-            'email' => 'test.com',
+            'preferred_working_hours' => 'test'
         ];
 
         $response = $this->call('PUT', '/api/v1/users/' . $user->id, $userData);
         $this->assertResponseStatus(400);
         $responseJson = json_decode($response->getContent(), true);
-        $this->assertEquals(['email' => ['The email must be a valid email address.']], $responseJson);
+        $this->assertEquals(['preferred_working_hours' => ['The preferred working hours must be a number.']], $responseJson);
     }
 
     /**

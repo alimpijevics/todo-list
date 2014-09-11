@@ -1,0 +1,102 @@
+<div class="page-header">
+  <h1>Hello {{ user.full_name }} <small class="pull-right"><a href="" ng-click="logout()">Logout</a></small></h1>
+  <p class="lead">This is simple time management. Below you can list/filter or add your working records.</p>
+</div>
+
+<div class="row">
+    <div class="col-md-4">
+         <form ng-submit="updatePreferredWorkingHours()" class="form-inline" role="form">
+            <h5>Preferred working hours</h5>
+            <input type="text" class="form-control" ng-model="pwh" >
+            <button type="submit" class="btn btn-primary">Save</button>
+         </form>
+        <div class="has-error form-group" ng-show="pwhError">
+        <br>
+          <ul>
+            <li ng-show="pwhError">{{ pwhError[0] }}</li>
+          </ul>
+        </div>
+    </div>
+</div>
+
+<h3>Create new record</h3>
+<div class="row">
+  <div class="col-md-12">
+    <form ng-submit="insertTime()" class="form-inline" role="form">
+      <div ng-class="{ 'has-error': timeErrors.date }" class="form-group">
+        <label class="sr-only">Date</label>
+        <input ng-model="newTime.date" type="date" class="form-control" placeholder=" Date">
+      </div>
+      <div ng-class="{ 'has-error': timeErrors.worked_hours }" class="form-group">
+        <label class="sr-only">Worked Hours</label>
+        <input ng-model="newTime.worked_hours" type="text" class="form-control" placeholder="Worked Hours">
+      </div>
+      <div ng-class="{ 'has-error': timeErrors.notes }" class="form-group">
+        <label class="sr-only">Notes</label>
+        <input ng-model="newTime.notes" type="text" class="form-control" placeholder="Notes">
+      </div>
+      <button type="submit" class="btn btn-primary">Save</button>
+    </form>
+    <div class="has-error form-group" ng-show="timeErrors">
+    <br>
+      <ul>
+        <li ng-show="timeErrors.date">{{ timeErrors.date[0] }}</li>
+        <li ng-show="timeErrors.worked_hours">{{ timeErrors.worked_hours[0] }}</li>
+        <li ng-show="timeErrors.notes">{{ timeErrors.notes[0] }}</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<h3>Your Time records</h3>
+<div class="row">
+  <div class="col-md-12">
+    <table class="table table-hover inline-editing">
+      <thead>
+        <tr>
+          <td>From</td>
+          <td>To</td>
+          <td>&nbsp;</td>
+          <td>&nbsp;</td>
+        </tr>
+      </thead>
+
+      <tbody>
+        <tr class="inline-edit">
+          <td><input ng-enter="filterTimes()" class="form-control" type="date" ng-model="filter.from"></td>
+          <td><input ng-enter="filterTimes()" class="form-control" type="date" ng-model="filter.to"></td>
+          <td></td>
+          <td>
+            <a ng-click="filterTimes()" href=""><span class="glyphicon glyphicon-ok"></span></a>
+            <a ng-click="resetFilter()" href=""><span class="glyphicon glyphicon-remove"></span></a>
+          </td>
+        </tr>
+        <tr ng-class="{ 'inline-edit': time.editing,  'preferred': isInPreferredWorkingHours(time) }" class="time-row" ng-repeat="time in times">
+          <td ng-class="{ 'has-error': time.errors.worked_hours }">
+            <span class="holder">{{ time.worked_hours }}</span>
+            <input placeholder="Worked hours" class="form-control" type="text" ng-model="time.worked_hours">
+          </td>
+          <td ng-class="{ 'has-error': time.errors.date }">
+            <span class="holder">{{ time.date | date:"mediumDate" }}</span>
+            <input placeholder="Date" class="form-control" type="date" ng-model="time.date_formated">
+          </td>
+          <td ng-class="{ 'has-error': time.errors.notes }">
+            <span class="holder">{{ time.notes }}</span>
+            <input placeholder="Notes" class="form-control" type="text" ng-model="time.notes">
+          </td>
+          <td>
+            <span class="holder">
+              <a ng-click="removeTime(time)" href=""><span class="glyphicon glyphicon-trash"></span></a>
+              <a ng-click="editTime(time)" href=""><span class="glyphicon glyphicon-edit"></span></a>
+            </span>
+            <span ng-show="time.editing" class="">
+              <a ng-click="updateTime(time)" href=""><span class="glyphicon glyphicon-ok"></span></a>
+              <a ng-click="cancelEditingTime(time)" href=""><span class="glyphicon glyphicon-remove"></span></a>
+            </span>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+

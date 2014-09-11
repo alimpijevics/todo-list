@@ -28,11 +28,11 @@ class User extends Eloquent implements UserInterface, RemindableInterface
     public static $storeRules = array(
         'full_name' => 'required',
         'email' => 'unique:users|required|email',
-        'password' => 'required|same:confirm_password'
+        'password' => 'required|same:confirm_password',
+        'preferred_working_hours' => 'numeric'
     );
     public static $updateRules = array(
-        'full_name' => 'required',
-        'email' => 'unique:users|required|email'
+        'preferred_working_hours' => 'numeric'
     );
 
     public function times()
