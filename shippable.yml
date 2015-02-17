@@ -7,10 +7,9 @@ php:
   
 services:
   - mysql
-  
+    
 before_script:
     - mysql -e 'create database time_management_test;'
-    - mysql -e "CREATE USER 'root'@'localhost' IDENTIFIED BY 'root'";
     - php artisan migrate --seed --env=testing
 
 script: phpunit --configuration phpunit.xml
