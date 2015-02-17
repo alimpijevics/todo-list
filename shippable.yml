@@ -12,8 +12,12 @@ before_script:
     - composer install --prefer-source --no-interaction
     - mysql -e 'create database time_management_test;'
     - php artisan migrate --env=testing
+    - mkdir -p shippable/codecoverage
+    - mkdir -p shippable/testresults
 
-script: phpunit --configuration phpunit.xml
+script: phpunit --configuration phpunit.xml --log-junit shippable/testresults/junit.xml --coverage-xml shippable/codecoverage  
+
+cache: true
  
 notifications:
     email:
