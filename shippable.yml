@@ -9,6 +9,7 @@ services:
   - mysql
     
 before_script:
+    - composer install --prefer-source --no-interaction
     - mysql -e 'create database time_management_test;'
     - php artisan migrate --seed --env=testing
 
